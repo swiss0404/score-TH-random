@@ -15,7 +15,6 @@ while seat['# Contracts'].sum() > 1:
     random.shuffle(list_school)
     print('')
     print('Round: ' + str(round))
-    sleep(1)
     none_control = True
     for school in list_school:
         for sel in data[school]:
@@ -27,23 +26,11 @@ while seat['# Contracts'].sum() > 1:
                     print(school + ': ' + sel)
                     none_control = False
                     data[school] = False
-                    # print(data)
-                    # if seat.loc[seat['Country'] == sel,'# Contracts'].values[0] == 0:
-                    #     for x in data.columns:
-                    #         for y in data.index:
-                    #             if data[x][y] == sel:
-                    #                 data[x][y] = False
-                data.loc[data[school] == sel, school] = False
                 break
     round += 1
     for taken_country in seat['Country'].where(seat['# Contracts'] == 0):
-        # print(seat['Country'].where(seat['# Contracts'] == 0))
-        for x in data.columns:
-            for y in data.index:
-                if data[x][y] == taken_country:
-                    data[x][y] = False
+        data = data.applymap(lambda x: False if taken_country == x else x)
     if none_control:
-        sleep(1)
         print('None')
     sleep(1)
 print('')

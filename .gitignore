@@ -11,3 +11,4 @@
 /.vscode/
 /.ipynb_checkpoints/
 /csv_file/
+.DS_Store
