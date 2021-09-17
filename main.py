@@ -2,16 +2,19 @@ import pandas as pd
 import random
 from time import sleep
 from datetime import datetime
+import os
 
-seat = pd.read_csv("csv_file/TEST_Quota_Bidding - Sheet1.csv")
-data = pd.read_csv("csv_file/[DL_16_09] Quota Bidding (Responses) - Sheet3.csv")
+#quota csv
+seat = pd.read_csv("csv_file/[Quota] Quota_Bidding - Sheet1.csv") 
+#selection csv
+data = pd.read_csv("csv_file/[DL_16_09] Quota Bidding (Responses) - Quota Bidding Summary.csv") 
 seat = seat[["Country",'# Contracts']]
 list_school = data.columns.to_list()[1:]
 data = data.drop(columns=['University'])
 round = 1
 results =[]
 while seat['# Contracts'].sum() > 1:
-    random.seed(str(datetime.now))
+    random.seed(str(datetime.now) + str(os.urandom(10)))
     random.shuffle(list_school)
     print('')
     print('Round: ' + str(round))
@@ -28,7 +31,7 @@ while seat['# Contracts'].sum() > 1:
                     data[school] = False
                 break
     round += 1
-    for taken_country in seat['Country'].where(seat['# Contracts'] == 0):
+    for taken_country in seat['Country'].where(seat['# Contracts'] == 0): #clear all full country
         data = data.applymap(lambda x: False if taken_country == x else x)
     if none_control:
         print('None')
