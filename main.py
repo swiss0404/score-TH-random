@@ -20,18 +20,19 @@ while seat['# Contracts'].sum() > 1:
     print('Round: ' + str(round))
     none_control = True
     for school in list_school:
-        for sel in data[school]:
-            if sel:
-                if seat.loc[seat['Country'] == sel,'# Contracts'].values[0] > 0:
+        for selection in data[school]:
+            if selection:
+                if seat.loc[seat['Country'] == selection,'# Contracts'].values[0] > 0:
                     sleep(1)
-                    seat.loc[seat['Country'] == sel,'# Contracts'] -= 1
-                    results.append(sel + ': ' + school)
-                    print(school + ': ' + sel)
+                    seat.loc[seat['Country'] == selection,'# Contracts'] -= 1
+                    results.append(selection + ': ' + school)
+                    print(school + ': ' + selection)
                     none_control = False
                     data[school] = False
                 break
     round += 1
-    for taken_country in seat['Country'].where(seat['# Contracts'] == 0): #clear all full country
+    for taken_country in seat['Country'].where(seat['# Contracts'] == 0): 
+        #clear all full seat
         data = data.applymap(lambda x: False if taken_country == x else x)
     if none_control:
         print('None')
