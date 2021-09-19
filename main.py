@@ -14,7 +14,7 @@ data = data.drop(columns=['University'])
 round = 1
 results =[]
 while seat['# Contracts'].sum() > 1:
-    random.seed(str(datetime.now) + str(os.urandom(10)))
+    random.seed(str(datetime.now()) + str(os.urandom(10)))
     random.shuffle(list_school)
     print('')
     print('Round: ' + str(round))
